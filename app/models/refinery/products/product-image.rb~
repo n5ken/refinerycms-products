@@ -1,0 +1,13 @@
+module Refinery
+  module Products
+    class ProductImage < Refinery::Core::BaseModel
+
+      attr_accessible :title, :description, :position
+
+      self.table_name = 'refinery_products'      
+    
+      acts_as_indexed :fields => [:title, :description]
+           
+    end
+  end
+end

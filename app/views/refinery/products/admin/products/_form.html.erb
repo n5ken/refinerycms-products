@@ -1,0 +1,61 @@
+<%= form_for [refinery, :products_admin, @product], :html => {:multipart => true} do |f| -%>
+  <%= render '/refinery/admin/error_messages',
+              :object => @product,
+              :include_object_name => true %>
+  
+  <div class='field'>
+    <%= f.label :title -%>
+    <%= f.text_field :title, :class => 'larger widest'  -%>
+  </div>
+  
+  <div class='field'>
+    <div id='page-tabs' class='clearfix ui-tabs ui-widget ui-widget-content ui-corner-all'>
+      <ul id='page_parts'>
+        <% [:description].each_with_index do |part, part_index| %>
+          <li class='ui-state-default<%= ' ui-state-active' if part_index == 0 %>'>
+            <%= link_to t("#{part}", :scope => "activerecord.attributes.refinery/products/product", :default => part.to_s.titleize), "##{part}" %>
+          </li>
+        <% end %>
+      </ul>
+      <div id='page_part_editors'>
+        <% [:description].each do |part| %>
+          <div class='page_part' id='<%= part %>'>
+            <%= f.text_area part, :rows => 20, :class => 'wymeditor widest' -%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class='field'>
+    <%= f.label :images %>
+
+    <div style='border: 1px solid #AAAAAA; display: block; height: 100px; width: 100px; padding: 2px; float: left; margin-right: 5px;'>
+      <%= image_tag @product.image.thumb('100x100#').url if @product.image %>
+    </div>
+    <% @product.images.each do |image| %>
+      <div style='border: 1px solid #AAAAAA; display: block; height: 100px; width: 100px; padding: 2px; float: left; margin-right: 5px;'>
+        <%= image_tag image.image.thumb('100x100#').url if image.image %>
+      </div>
+      <div style='float: left; margin-right: 5px;'>
+        <%= link_to refinery_icon_tag("delete.png"), refinery.products_admin_product_product_image_path(@product, image), :method => 'delete', :confirm => 'really?' %>
+      </div>
+    <% end %>
+
+    <div style='clear: both;'></div>
+
+    <p><%= f.file_field :image %></p>
+  </div>
+
+  <%= render '/refinery/admin/form_actions', :f => f,
+             :continue_editing => false,
+             :delete_title => t('delete', :scope => 'refinery.products.admin.products.product'),
+             :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @product.title) %>
+<% end -%>
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function(){
+      page_options.init(false, '', '');
+    });
+  </script>
+<% end %>

@@ -1,0 +1,12 @@
+module Refinery
+  module Products
+    module Admin
+      class ProductImagesController < ::Refinery::AdminController
+
+        def destroy
+        end
+
+      end
+    end
+  end
+end

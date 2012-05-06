@@ -1,0 +1,24 @@
+require 'dragonfly'
+require 'acts_as_indexed'
+
+module Refinery
+  module Products
+    class Product < Refinery::Core::BaseModel
+      ::Refinery::Products::Dragonfly.setup!
+
+      self.table_name = 'refinery_products'  
+
+      has_many :images, :class_name => ProductImage
+
+      include Images::Validators
+
+      image_accessor :image
+
+      attr_accessible :title, :description, :position, :image, :image_size
+
+      acts_as_indexed :fields => [:title, :description]
+      
+      validates :title, :presence => true  
+    end
+  end
+end
