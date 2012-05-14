@@ -1,4 +1,4 @@
-class CreateProductsProducts < ActiveRecord::Migration
+class CreateProducts < ActiveRecord::Migration
 
   def up
     create_table :refinery_products do |t|

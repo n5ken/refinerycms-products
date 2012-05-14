@@ -9,6 +9,7 @@ module Refinery
       self.table_name = 'refinery_products'  
 
       has_many :images, :class_name => ProductImage
+      belongs_to :category, :foreign_key => 'category_id', :class_name => 'ProductCategory'
 
       include Images::Validators
 

@@ -8,7 +8,8 @@ module Refinery
       def index
         # you can use meta fields from your model instead (e.g. browser_title)
         # by swapping @page for @product in the line below:
-        present(@page)
+        # present(@page)
+        @products = Product.paginate :page => params[:page]
       end
 
       def show

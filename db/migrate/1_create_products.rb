@@ -15,6 +15,9 @@ class CreateProducts < ActiveRecord::Migration
       t.string   :image_uid
       t.string   :image_ext
 
+      # 产品类别
+      t.integer  :category_id
+
       t.timestamps
     end
 
